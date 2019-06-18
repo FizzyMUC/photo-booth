@@ -51,10 +51,7 @@ camera.initialize(function( res, msg, err) {
     new CameraErrorOnStartupPrompt(-1).start(false, false);
   }
   let liveConfig = utils.getConfig().live;
-  if(liveConfig){
-    livePreview = new LivePreview(camera.camera, document.getElementById('live'), liveConfig.framerate);
-    livePreview.start()
-  }
+
 });
 
 /*
@@ -116,6 +113,12 @@ function trigger() {
 
     const triggerPhotoOffsetBeforeZero = 0.5; // in seconds
 
+    // start LivePreview
+    if(liveConfig){
+      livePreview = new LivePreview(camera.camera, document.getElementById('live'), liveConfig.framerate);
+      livePreview.start()
+    }
+
     // start countdown and show spinner afterwards
     let countdownLength;
     if(seriesCounter === 0) {
@@ -170,8 +173,6 @@ function trigger() {
 
               webApp.sendNewPhoto(message2);  // send image to connected web clients
 
-              if(livePreview)
-                livePreview.start()
               slideshow.start();
 
             } else {
